@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
+const bcrypt = require('bcrypt');
 
 const Users = require('../../models/users');
 
+//GETS
 /* Ruta principal de acceso a todos los usuarios */
 router.get('/', (req, res) => {
     Users.getAll()
@@ -29,4 +31,20 @@ router.get('/:idUsuario', (req, res) => {
     })
     .catch(err => console.log(err))
 });
+
+//POSTS
+/* Ruta para registro de usuario */
+router.post('/register', async (req, res) => {
+    try{
+        const result = await Users.insert(req.body);
+        res.json(result)
+        console.log(req.body)
+    }
+    catch(err){
+        console.log(err)
+    }
+});
+
+
+
 module.exports = router;

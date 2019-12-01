@@ -1,4 +1,5 @@
 const moment = require('moment');
+
 /* Obtener todos los usuarios */
 const getAll = () => {
     return new Promise((resolve, reject)=>{
@@ -37,6 +38,18 @@ const getById = (pId) => {
     });
 };
 
+/* Registro de usuarios */
+const insert = ({email, username, password, name, surnames, imageUrl}) => {
+    return new Promise((resolve, reject) => {
+        db.query('INSERT INTO users ( email, username, password, name, surnames, imageUrl, isActive, startAt, updateAt) VALUES (?, ?, ?, ? ,? ,?, ?, ?, ? )', [email, username, password, name, surnames, imageUrl, true, new Date(), new Date(), (err, result)=>{
+            if(err) reject(err)
+            if(result){
+            console.log('Se ha registrado correctamente')
+            resolve(result)
+            };
+        }]);
+    });
+};
 
 
 
@@ -61,5 +74,6 @@ let dateFormatAll = (pRow) =>{
 module.exports = {
     getAll : getAll,
     getById : getById,
-    getAllActive: getAllActive
+    getAllActive: getAllActive,
+    insert: insert
 }
