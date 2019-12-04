@@ -1,4 +1,5 @@
 const moment = require('moment');
+const middleware = require('../routes/middleware');
 
 /* Obtener todos los usuarios */
 const getAll = () => {
@@ -27,6 +28,7 @@ const getAllActive = (pActive) => {
 };
 
 
+
 /* Obtener usuarios por su ID */
 const getById = (pId) => {
     return new Promise((resolve, reject)=>{
@@ -38,16 +40,36 @@ const getById = (pId) => {
     });
 };
 
+/* Obtener usuarios por su Email */
+const getByEmail = (pEmail) => {
+    return new Promise((resolve, reject)=>{
+        db.query('SELECT * FROM users WHERE email = ?', [pEmail], (err, rows) =>{
+            if(err) reject(err)
+            if(rows[0]) rows[0] = dateFormatAll(rows[0])
+            resolve(rows[0])
+        });
+    });
+};
+
 /* Registro de usuarios */
 const insert = ({email, username, password, name, surnames, imageUrl}) => {
     return new Promise((resolve, reject) => {
         db.query('INSERT INTO users ( email, username, password, name, surnames, imageUrl, isActive, startAt, updateAt) VALUES (?, ?, ?, ? ,? ,?, ?, ?, ? )', [email, username, password, name, surnames, imageUrl, true, new Date(), new Date(), (err, result)=>{
             if(err) reject(err)
             if(result){
-            console.log('Se ha registrado correctamente')
             resolve(result)
             };
         }]);
+    });
+};
+
+/* Actualización de usuarios */
+const update = ({id, email}) => {
+    return new Promise((resolve, reject)=>{
+        db.query('UPDATE users SET name = ? WHERE id = ?', [email, id], (err, result)=>{
+            if(err) reject(err)
+            resolve(result)
+        });
     });
 };
 
@@ -74,6 +96,8 @@ let dateFormatAll = (pRow) =>{
 module.exports = {
     getAll : getAll,
     getById : getById,
+    getByEmail: getByEmail,
     getAllActive: getAllActive,
-    insert: insert
+    insert: insert,
+    update: update
 }
