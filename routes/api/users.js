@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
             error: 'Error, email or password not found'
         })
     } else {
-        const equals = bcrypt.compareSync(req.body.password, user.password);
+        const equals = bcrypt.compare(req.body.password, user.password);
         if (!equals) {
             res.json({
                 error: 'Error, email or password not found'
