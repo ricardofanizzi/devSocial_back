@@ -1,11 +1,10 @@
 const moment = require('moment');
-const middleware = require('../routes/middleware');
 
 /* Obtener todos los usuarios */
 const getAll = () => {
-    return new Promise((resolve, reject)=>{
-        db.query('SELECT * FROM users', (err, rows)=>{
-            if(err) reject(err)
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM users', (err, rows) => {
+            if (err) reject(err)
             rows.map(row => {
                 row = dateFormatAll(row)
             })
@@ -16,9 +15,9 @@ const getAll = () => {
 
 /* Obtener todos los usuarios activos o inactivos */
 const getAllActive = (pActive) => {
-    return new Promise((resolve, reject) =>{
-        db.query('SELECT * FROM users WHERE isActive = ?', [pActive], (err, rows)=>{
-            if(err) reject(err)
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM users WHERE isActive = ?', [pActive], (err, rows) => {
+            if (err) reject(err)
             rows.map(row => {
                 row = dateFormatAll(row)
             })
@@ -31,9 +30,9 @@ const getAllActive = (pActive) => {
 
 /* Obtener usuarios por su ID */
 const getById = (pId) => {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         db.query('SELECT * FROM users WHERE id = ?', [pId], (err, rows) => {
-            if(err) reject(err)
+            if (err) reject(err)
             rows[0] = dateFormatAll(rows[0])
             resolve(rows[0])
         });
@@ -42,32 +41,32 @@ const getById = (pId) => {
 
 /* Obtener usuarios por su Email */
 const getByEmail = (pEmail) => {
-    return new Promise((resolve, reject)=>{
-        db.query('SELECT * FROM users WHERE email = ?', [pEmail], (err, rows) =>{
-            if(err) reject(err)
-            if(rows[0]) rows[0] = dateFormatAll(rows[0])
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM users WHERE email = ?', [pEmail], (err, rows) => {
+            if (err) reject(err)
+            if (rows[0]) rows[0] = dateFormatAll(rows[0])
             resolve(rows[0])
         });
     });
 };
 
 /* Registro de usuarios */
-const insert = ({email, username, password, name, surnames, imageUrl}) => {
+const insert = ({ email, username, password, name, surnames, imageUrl }) => {
     return new Promise((resolve, reject) => {
-        db.query('INSERT INTO users ( email, username, password, name, surnames, imageUrl, isActive, startAt, updateAt) VALUES (?, ?, ?, ? ,? ,?, ?, ?, ? )', [email, username, password, name, surnames, imageUrl, true, new Date(), new Date(), (err, result)=>{
-            if(err) reject(err)
-            if(result){
-            resolve(result)
+        db.query('INSERT INTO users ( email, username, password, name, surnames, imageUrl, isActive, startAt, updateAt) VALUES (?, ?, ?, ? ,? ,?, ?, ?, ? )', [email, username, password, name, surnames, imageUrl, true, new Date(), new Date()], (err, result) => {
+            if (err) reject(err)
+            if (result) {
+                resolve(result)
             };
-        }]);
+        });
     });
 };
 
 /* Actualización de usuarios */
-const update = ({id, email}) => {
-    return new Promise((resolve, reject)=>{
-        db.query('UPDATE users SET name = ? WHERE id = ?', [email, id], (err, result)=>{
-            if(err) reject(err)
+const update = ({ id, email }) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE users SET name = ? WHERE id = ?', [email, id], (err, result) => {
+            if (err) reject(err)
             resolve(result)
         });
     });
@@ -79,23 +78,23 @@ const update = ({id, email}) => {
 
 //Formato por fecha para datos
 let dateFormat = (pDate, pOptionalFormat = 'DD-MM-YYYY') => {
-   return pDate = (pDate != null) ? moment(pDate).format(pOptionalFormat): ''
+    return pDate = (pDate != null) ? moment(pDate).format(pOptionalFormat) : ''
 }
 
 //Formato por fecha para objetos
-let dateFormatAll = (pRow) =>{
+let dateFormatAll = (pRow) => {
     pRow.endAt = dateFormat(pRow.endAt);
     pRow.startAt = dateFormat(pRow.startAt);
     pRow.eulaDate = dateFormat(pRow.eulaDate);
-    pRow.updateAt = dateFormat(pRow.updateAt ,'DD-MM-YYYY HH:MM:ss') 
+    pRow.updateAt = dateFormat(pRow.updateAt, 'DD-MM-YYYY HH:MM:ss')
     return pRow
 }
 
 /* Final de funciones */
 
 module.exports = {
-    getAll : getAll,
-    getById : getById,
+    getAll: getAll,
+    getById: getById,
     getByEmail: getByEmail,
     getAllActive: getAllActive,
     insert: insert,
