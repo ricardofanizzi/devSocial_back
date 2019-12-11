@@ -48,6 +48,7 @@ router.use(middlewares.checkToken)
 
 
 router.get('/main', (req, res) => {
+    console.log(req.userId);
     Users.getById(req.userId)
         .then(rows => {
             console.log(rows)

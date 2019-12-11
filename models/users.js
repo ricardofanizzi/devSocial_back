@@ -86,6 +86,7 @@ let dateFormat = (pDate, pOptionalFormat = 'DD-MM-YYYY') => {
 
 //Formato por fecha para objetos
 let dateFormatAll = (pRow) => {
+    console.log(pRow)
     pRow.endAt = dateFormat(pRow.endAt);
     pRow.startAt = dateFormat(pRow.startAt);
     pRow.eulaDate = dateFormat(pRow.eulaDate);
