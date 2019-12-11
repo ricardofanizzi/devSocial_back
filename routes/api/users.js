@@ -85,10 +85,36 @@ router.get('/:idUsuario', (req, res) => {
 });
 
 router.post('/updatenames', async (req, res) => {
-    const result = await Users.updateNames(req.body)
+    req.body.id = req.userId
+    const result = await Users.updateNames(req.body);
     console.log(result);
+    res.json(result);
 });
 
+router.post('/updatemail', async (req, res) => {
+    req.body.id = req.userId;
+    const result = await Users.updateEmail(req.body);
+    console.log(result);
+    res.json(result);
+});
+
+router.post('/updatepass', async (req, res) => {
+    const user = await Users.getById(req.userId)
+    req.body.id = req.userId;
+    const equals = bcrypt.compare(req.body.oldPassword, user.password)
+    if (!equals) {
+        res.json({
+            error: 'Old password is incorrect'
+        });
+    } else {
+        req.body.password = bcrypt.hashSync(req.body.password, 10);
+        const result = await Users.updatePassword(req.body);
+        console.log(result);
+        res.json({
+            succesfull: 'Update succesfull'
+        });
+    };
+});
 
 const createToken = (user) => {
     let payload = {

@@ -75,7 +75,23 @@ const updateNames = ({ id, username, name, surnames }) => {
     });
 };
 
+const updateEmail = ({ id, email }) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE users SET email = ? WHERE id = ?', [email, id], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        });
+    });
+};
 
+const updatePassword = ({ id, password }) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE users  SET password = ? WHERE id = ?', [password, id], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        });
+    });
+};
 
 /* Funciones */
 
@@ -102,5 +118,7 @@ module.exports = {
     getByEmail: getByEmail,
     getAllActive: getAllActive,
     insert: insert,
-    updateNames: updateNames
+    updateNames: updateNames,
+    updateEmail: updateEmail,
+    updatePassword: updatePassword
 }
