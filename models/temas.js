@@ -8,7 +8,7 @@ const getAll = () => {
         });
     })
 }
-
+// Obtener temas by id
 const getById = (pId) => {
     return new Promise((resolve, reject) => {
         db.query('SELECT * from temas where id = ?', [pId], (err, rows) => {
@@ -21,7 +21,7 @@ const getById = (pId) => {
         })
     })
 }
-// MIRAR ESTO   
+// Insertar tema
 const insert = ({ nombre, isPublic, descripcion, imgUrl, especializacion }) => {
     return new Promise((resolve, reject) => {
 
@@ -32,11 +32,40 @@ const insert = ({ nombre, isPublic, descripcion, imgUrl, especializacion }) => {
     })
 }
 
+/* Actualización de temas */
+const update = ({ name, isPublic, isActive, descripcion, imgUrl, id }) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE temas SET nombre = ?, isPublic = ?, isActive = ?, descripcion = ?, imgUrl = ? WHERE id = ?', [name, isPublic, isActive, descripcion, imgUrl, id], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        });
+    });
+};
 
-// Crear fundion para  traer activos
+
+/* Eliminacion de tema */
+
+const deleted = (pId) => {
+    return new Promise((resolve, reject) => {
+        db.query('DELETE FROM temas WHERE id = ?', [pId], (err, rows) => {
+            if (err) reject(err)
+            resolve(rows)
+        })
+    })
+}
+
+
+
+
+
+
 module.exports = {
     getAll: getAll,
-    getById: getById
+    getById: getById,
+    insert: insert,
+    update: update,
+    deleted: deleted
+
 }
 
 
