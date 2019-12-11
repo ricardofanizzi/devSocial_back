@@ -63,9 +63,9 @@ const insert = ({ email, username, password, name, surnames, imageUrl }) => {
 };
 
 /* Actualización de usuarios */
-const update = ({ id, email }) => {
+const updateNames = ({ id, username, name, surnames }) => {
     return new Promise((resolve, reject) => {
-        db.query('UPDATE users SET name = ? WHERE id = ?', [email, id], (err, result) => {
+        db.query('UPDATE users SET username = ?, name = ?, surnames = ? WHERE id = ?', [username, name, surnames, id], (err, result) => {
             if (err) reject(err)
             resolve(result)
         });
@@ -98,5 +98,5 @@ module.exports = {
     getByEmail: getByEmail,
     getAllActive: getAllActive,
     insert: insert,
-    update: update
+    updateNames: updateNames
 }

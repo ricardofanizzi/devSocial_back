@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const moment = require('moment');
 const middlewares = require('../middleware')
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
             error: 'Error, email or password not found'
         })
     } else {
-        const equals = bcrypt.compareSync(req.body.password, user.password);
+        const equals = bcrypt.compare(req.body.password, user.password);
         if (!equals) {
             res.json({
                 error: 'Error, email or password not found'
@@ -81,6 +81,11 @@ router.get('/:idUsuario', (req, res) => {
             res.json(row)
         })
         .catch(err => console.log(err))
+});
+
+router.post('/updatenames', async (req, res) => {
+    const result = await Users.updateNames(req.body)
+    console.log(result);
 });
 
 
