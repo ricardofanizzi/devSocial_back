@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
         if (!equals) {
             res.json({
                 error: 'Error, email or password not found'
-            });
+            })
         } else {
             res.json({
                 succesfull: createToken(user),

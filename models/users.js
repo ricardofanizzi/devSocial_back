@@ -62,6 +62,9 @@ const insert = ({ email, username, password, name, surnames, imageUrl }) => {
     });
 };
 
+
+
+
 /* Actualización de usuarios */
 const updateNames = ({ id, username, name, surnames }) => {
     return new Promise((resolve, reject) => {
