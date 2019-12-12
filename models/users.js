@@ -75,7 +75,23 @@ const updateNames = ({ id, username, name, surnames }) => {
     });
 };
 
+const updateEmail = ({ id, email }) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE users SET email = ? WHERE id = ?', [email, id], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        });
+    });
+};
 
+const updatePassword = ({ id, password }) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE users  SET password = ? WHERE id = ?', [password, id], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        });
+    });
+};
 
 /* Funciones */
 
@@ -86,6 +102,7 @@ let dateFormat = (pDate, pOptionalFormat = 'DD-MM-YYYY') => {
 
 //Formato por fecha para objetos
 let dateFormatAll = (pRow) => {
+    console.log(pRow)
     pRow.endAt = dateFormat(pRow.endAt);
     pRow.startAt = dateFormat(pRow.startAt);
     pRow.eulaDate = dateFormat(pRow.eulaDate);
@@ -101,5 +118,7 @@ module.exports = {
     getByEmail: getByEmail,
     getAllActive: getAllActive,
     insert: insert,
-    updateNames: updateNames
+    updateNames: updateNames,
+    updateEmail: updateEmail,
+    updatePassword: updatePassword
 }
