@@ -30,9 +30,7 @@ router.post('/login', async (req, res) => {
             error: 'Error, email or password not found'
         })
     } else {
-
         const equals = bcrypt.compare(req.body.password, user.password);
-        console.log(equals)
         if (!equals) {
             res.json({
                 error: 'Error, email or password not found'
@@ -50,6 +48,7 @@ router.use(middlewares.checkToken)
 
 
 router.get('/main', (req, res) => {
+    console.log(req.userId);
     Users.getById(req.userId)
         .then(rows => {
             console.log(rows)
@@ -85,6 +84,37 @@ router.get('/:idUsuario', (req, res) => {
         .catch(err => console.log(err))
 });
 
+router.post('/updatenames', async (req, res) => {
+    req.body.id = req.userId
+    const result = await Users.updateNames(req.body);
+    console.log(result);
+    res.json(result);
+});
+
+router.post('/updatemail', async (req, res) => {
+    req.body.id = req.userId;
+    const result = await Users.updateEmail(req.body);
+    console.log(result);
+    res.json(result);
+});
+
+router.post('/updatepass', async (req, res) => {
+    const user = await Users.getById(req.userId)
+    req.body.id = req.userId;
+    const equals = bcrypt.compare(req.body.oldPassword, user.password)
+    if (!equals) {
+        res.json({
+            error: 'Old password is incorrect'
+        });
+    } else {
+        req.body.password = bcrypt.hashSync(req.body.password, 10);
+        const result = await Users.updatePassword(req.body);
+        console.log(result);
+        res.json({
+            succesfull: 'Update succesfull'
+        });
+    };
+});
 
 const createToken = (user) => {
     let payload = {
