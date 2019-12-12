@@ -7,17 +7,18 @@ const coment = require("../../models/coment");
 router.post("/", (req, res) => {
   coment
     .newComent(req.body)
-    .then(result => {
-      console.log(result);
-      res.json(result);
+    .then(async result => {
+      let comentarios = await coment.getComents(req.body.idTema);
+      res.json(comentarios);
     })
     .catch(error => {
       console.log(error);
     });
 });
 
-router.get("/", (req, res) => {
-  coment.getComents().then(rows => {
+router.get("/:pId", (req, res) => {
+  console.log(req.params.pId);
+  coment.getComents(req.params.pId).then(rows => {
     res.json(rows);
   });
 });

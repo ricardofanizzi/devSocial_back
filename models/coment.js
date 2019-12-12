@@ -12,12 +12,16 @@ const newComent = ({ coment, date, idUser, idTema }) => {
   });
 };
 
-const getComents = () => {
+const getComents = idTema => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT *  FROM COMENTS", (error, rows) => {
-      if (error) reject(error);
-      resolve(rows);
-    });
+    db.query(
+      "SELECT * FROM COMENTS WHERE fk_tema = ?",
+      [idTema],
+      (error, rows) => {
+        if (error) reject(error);
+        resolve(rows);
+      }
+    );
   });
 };
 
