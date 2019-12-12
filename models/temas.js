@@ -22,10 +22,12 @@ const getById = (pId) => {
     })
 }
 // Insertar tema
-const insert = ({ nombre, isPublic, descripcion, imgUrl, especializacion }) => {
-    return new Promise((resolve, reject) => {
+const insert = ({ name, isPublic, descripcion, imgUrl, especializacion }) => {
 
-        db.query('INSERT INTO temas (nombre, isPublic, descripcion, imgUrl, especializacion) VALUES (?, ?, ?, ?, ?)', [nombre, isPublic, descripcion, imgUrl, especializacion], (err, result) => {
+
+    return new Promise((resolve, reject) => {
+        let especialidades = especializacion.toString();
+        db.query('INSERT INTO temas (name, isPublic, descripcion, imgUrl, especializacion) VALUES (?, ?, ?, ?, ?)', [name, isPublic, descripcion, imgUrl, especialidades], (err, result) => {
             if (err) reject(err);
             resolve(result);
         })
