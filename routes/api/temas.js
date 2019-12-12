@@ -35,14 +35,12 @@ router.post('/update', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-
     req.body.especializacion = [req.body.perfil1, req.body.perfil2, req.body.perfil3, req.body.perfil4, req.body.perfil5]
     console.log(req.body);
     temas.insert(req.body)
         .then(result => {
             res.json(result);
         })
-
 })
 
 
