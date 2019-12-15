@@ -38,7 +38,8 @@ router.post("/login", async (req, res) => {
         succesfull: createToken(user),
         done: "Login correct",
         username: user.username,
-        id: user.id
+        id: user.id,
+        imageUrl: user.imageUrl
       });
     }
   }
