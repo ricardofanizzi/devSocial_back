@@ -16,7 +16,6 @@ router.post("/register", async (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     const result = await Users.insert(req.body);
     res.json(result);
-    console.log(req.body);
   } catch (err) {
     console.log(err);
   }
@@ -24,7 +23,6 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const user = await Users.getByEmail(req.body.email);
-  console.log(user);
   if (user === undefined) {
     res.json({
       error: "Error, email or password not found"
