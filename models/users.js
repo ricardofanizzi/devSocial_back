@@ -45,7 +45,6 @@ const getById = pId => {
 const getByEmail = pEmail => {
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM users WHERE email = ?", [pEmail], (err, rows) => {
-      console.log(rows);
       if (err) reject(err);
       if (rows[0]) rows[0] = dateFormatAll(rows[0]);
       resolve(rows[0]);
@@ -128,7 +127,6 @@ let dateFormat = (pDate, pOptionalFormat = "DD-MM-YYYY") => {
 
 //Formato por fecha para objetos
 let dateFormatAll = pRow => {
-  console.log(pRow);
   pRow.endAt = dateFormat(pRow.endAt);
   pRow.startAt = dateFormat(pRow.startAt);
   pRow.eulaDate = dateFormat(pRow.eulaDate);
