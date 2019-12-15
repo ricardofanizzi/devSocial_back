@@ -14,7 +14,6 @@ router.post("/", (req, res) => {
 });
 
 router.get("/allData/:userId", async (req, res) => {
-  console.log(("DESDE ACA ", req.params));
   const rows = await UserProfile.getDataUserTables(req.params.userId);
   res.json(rows);
 });
