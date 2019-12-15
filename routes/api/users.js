@@ -16,7 +16,6 @@ router.post("/register", async (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     const result = await Users.insert(req.body);
     res.json(result);
-    console.log(req.body);
   } catch (err) {
     console.log(err);
   }
@@ -24,7 +23,6 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const user = await Users.getByEmail(req.body.email);
-  console.log(user);
   if (user === undefined) {
     res.json({
       error: "Error, email or password not found"
@@ -38,7 +36,9 @@ router.post("/login", async (req, res) => {
     } else {
       res.json({
         succesfull: createToken(user),
-        done: "Login correct"
+        done: "Login correct",
+        username: user.username,
+        id: user.id
       });
     }
   }
@@ -47,10 +47,8 @@ router.post("/login", async (req, res) => {
 router.use(middlewares.checkToken);
 
 router.get("/main", (req, res) => {
-  console.log(req.userId);
   Users.getById(req.userId)
     .then(rows => {
-      console.log(rows);
       res.json(rows);
     })
     .catch(err => console.log(err));
@@ -75,7 +73,6 @@ router.get("/active", (req, res) => {
 
 /* Ruta de acceso a usuario por ID */
 router.get("/:idUsuario", (req, res) => {
-  console.log(req.userId);
   Users.getById(req.params.idUsuario)
     .then(row => {
       res.json(row);
@@ -86,14 +83,12 @@ router.get("/:idUsuario", (req, res) => {
 router.post("/updatenames", async (req, res) => {
   req.body.id = req.userId;
   const result = await Users.updateNames(req.body);
-  console.log(result);
   res.json(result);
 });
 
 router.post("/updatemail", async (req, res) => {
   req.body.id = req.userId;
   const result = await Users.updateEmail(req.body);
-  console.log(result);
   res.json(result);
 });
 
@@ -108,7 +103,6 @@ router.post("/updatepass", async (req, res) => {
   } else {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     const result = await Users.updatePassword(req.body);
-    console.log(result);
     res.json({
       succesfull: "Update succesfull"
     });

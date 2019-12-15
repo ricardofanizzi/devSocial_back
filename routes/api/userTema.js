@@ -1,11 +1,12 @@
 const express = require('express');
+const UserTema = require('../../models/user_temas');
+
 const router = express.Router();
-const userTema = require('../../models/user_temas');
 
 
 
 router.post('/insert', async (req, res) => {
-    const result = await userTema.insert(req.body);
+    const result = await UserTema.insert(req.body);
     res.json(result);
 });
 
