@@ -71,7 +71,7 @@ const insert = ({ email, username, password, name, surnames, imageUrl }) => {
       (err, result) => {
         if (err) reject(err);
         if (result) {
-          resolve(result);
+          return resolve(result.insertId);
         }
       }
     );

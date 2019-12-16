@@ -12,7 +12,7 @@ router.use("/users", apiUserRouter);
 router.use("/temas", apiTemasRouter);
 router.use("/userProfile", apiUserProfileRouter);
 router.use("/coment", apiComentsRouter);
-router.use('/usertema', apiUserTemaRouter);
+router.use("/usertema", apiUserTemaRouter);
 router.use('/subscription', apiSubscriptionRouter);
 
 module.exports = router;
