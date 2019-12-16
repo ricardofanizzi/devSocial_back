@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const temas = require('../../models/temas');
+const middleware = require('../middleware');
 
 
 // Ruta para obtener todos los usuarios 
@@ -29,14 +30,12 @@ router.get('/:pId', (req, res) => {
 router.post('/update', (req, res) => {
     temas.update(req.body)
         .then(result => {
-            console.log(result);
             res.json(result);
         })
 });
 
 router.post('/create', (req, res) => {
     req.body.especializacion = [req.body.perfil1, req.body.perfil2, req.body.perfil3, req.body.perfil4, req.body.perfil5]
-    console.log(req.body);
     temas.insert(req.body)
         .then(result => {
             res.json(result);

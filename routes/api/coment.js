@@ -17,7 +17,6 @@ router.post("/", (req, res) => {
 });
 
 router.get("/:pId", (req, res) => {
-  console.log(req.params.pId);
   coment.getComents(req.params.pId).then(rows => {
     res.json(rows);
   });

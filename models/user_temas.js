@@ -7,7 +7,17 @@ const insert = ({ idTema, idUser, role }) => {
     });
 }
 
+const checkUser = ({ idUser, idTema }) => {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT tbi_tema_user.role FROM tbi_tema_user WHERE id_user = ? AND id_tema = ?', [idUser, idTema], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        });
+    });
+}
+
 
 module.exports = {
-    insert: insert
+    insert: insert,
+    checkUser: checkUser
 }
