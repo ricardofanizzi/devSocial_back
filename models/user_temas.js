@@ -23,17 +23,18 @@ const checkUser = ({ idUser, idTema }) => {
     );
   });
 };
-
-const getTemaByUser = ({ pUserId }) => {
+//Get Project by users.
+const getTemaByUser = ({ userId }) => {
+  console.log(userId)
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT temas.* FROM tbi_tema_user INNER JOIN temas ON temas.id = tbi_tema_user.id_tema INNER JOIN users ON users.id = tbi_tema_user.id_user WHERE users.id = pUserId"
-    ),
-      [pUserId],
+      "SELECT temas.* FROM tbi_tema_user INNER JOIN temas ON temas.id = tbi_tema_user.id_tema INNER JOIN users ON users.id = tbi_tema_user.id_user WHERE users.id = ?",
+      [userId],
       (err, rows) => {
         if (err) reject(err);
-        resolver(rows);
-      };
+        console.log(rows);
+        resolve(rows);
+      });
   });
 };
 
