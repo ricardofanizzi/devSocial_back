@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const temas = require('../../models/temas');
+const middleware = require('../middleware');
 
 
 // Ruta para obtener todos los usuarios 
