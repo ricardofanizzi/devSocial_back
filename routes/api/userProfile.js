@@ -13,6 +13,7 @@ router.post("/", (req, res) => {
     });
 });
 
+//GET http://localhost:3000/api/userProfile/allData/PARAMETROID
 router.get("/allData/:userId", async (req, res) => {
   const rows = await UserProfile.getDataUserTables(req.params.userId);
   res.json(rows);
