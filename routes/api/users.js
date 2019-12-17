@@ -6,12 +6,14 @@ const moment = require("moment");
 const middlewares = require("../middleware");
 const Users = require("../../models/users");
 
+
 //GETS
 /* Ruta principal de acceso a todos los usuarios */
 
 //POSTS
 /* Ruta para registro de usuario */
 router.post("/register", async (req, res) => {
+
   try {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     const result = await Users.insert(req.body);
