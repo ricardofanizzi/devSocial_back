@@ -15,7 +15,7 @@ const newComent = ({ coment, date, idUser, idTema }) => {
 const getComents = idTema => {
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT * FROM COMENTS WHERE fk_tema = ?",
+      "SELECT * FROM COMENTS WHERE fk_tema = ? order by date desc",
       [idTema],
       (error, rows) => {
         if (error) reject(error);
