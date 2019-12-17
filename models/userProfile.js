@@ -26,7 +26,30 @@ const getDataUserTables = pUserId => {
   });
 };
 
+const insertExtraInfo = ({ country, city, language, phone, id }) => {
+  return new Promise((res, rej) => {
+    db.query('UPDATE user_profile SET country = ?, city= ?, language = ?, phone = ? WHERE fk_user = ?', [country, city, language, phone, id], (error, result) => {
+      if (error) rej(error);
+      res(result);
+    });
+  })
+}
+
+const insertAbout = ({ about, id }) => {
+  return new Promise((res, rej) => {
+    db.query('UPDATE user_profile SET about_me = ? WHERE fk_user = ?', [about, id], (error, result) => {
+      if (error) rej(error)
+      res(result);
+    })
+  })
+}
+
+
+
+
 module.exports = {
   createUser: createUser,
-  getDataUserTables: getDataUserTables
+  getDataUserTables: getDataUserTables,
+  insertExtraInfo: insertExtraInfo,
+  insertAbout: insertAbout,
 };
