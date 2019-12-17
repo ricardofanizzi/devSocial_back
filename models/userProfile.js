@@ -44,6 +44,15 @@ const insertAbout = ({ about, id }) => {
   })
 }
 
+const updateSkills = ({ availability, speciality, experience, id }) => {
+  return new Promise((res, rej) => {
+    db.query('UPDATE user_profile SET availability = ?, speciality = ?, experience = ? WHERE fk_user = ?', [availability, speciality, experience, id], (error, result) => {
+      if (error) rej(error);
+      res(result)
+    })
+  })
+}
+
 
 
 
@@ -52,4 +61,5 @@ module.exports = {
   getDataUserTables: getDataUserTables,
   insertExtraInfo: insertExtraInfo,
   insertAbout: insertAbout,
+  updateSkills: updateSkills,
 };

@@ -45,4 +45,15 @@ router.post("/about", (req, res) => {
   })
 })
 
+//POST http://localhost:3000/api/userProfile/skills
+
+router.post("/skills", (req, res) => {
+  req.body.id = req.userId;
+  UserProfile.updateSkills(req.body).then(resolve => {
+    res.json(resolve)
+  }).catch(error => {
+    console.log(error);
+  })
+})
+
 module.exports = router;
