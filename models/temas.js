@@ -2,7 +2,7 @@
 // Obtener  todos los temas
 const getAll = () => {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM temas', (err, rows) => {
+        db.query('SELECT * FROM temas order by fecha_inicio desc', (err, rows) => {
             if (err) reject(err)
             resolve(rows)
         });
@@ -22,10 +22,10 @@ const getById = (pId) => {
     })
 }
 // Insertar tema
-const insert = ({ name, isPublic, descripcion, imgUrl, especializacion }) => {
+const insert = ({ name, isPublic, descripcion, imgUrl, especializacion, fecha_inicio, updateAt }) => {
     return new Promise((resolve, reject) => {
         let especialidades = especializacion.toString();
-        db.query('INSERT INTO temas (name, isPublic, descripcion, imgUrl, especializacion) VALUES (?, ?, ?, ?, ?)', [name, 1, descripcion, imgUrl, especialidades], (err, result) => {
+        db.query('INSERT INTO temas (name, isPublic, descripcion, imgUrl, especializacion, fecha_inicio,updateAt) VALUES (?, ?, ?, ?, ?,?,?)', [name, 1, descripcion, imgUrl, especialidades, new Date(), new Date()], (err, result) => {
             if (err) reject(err);
             resolve(result);
         })
