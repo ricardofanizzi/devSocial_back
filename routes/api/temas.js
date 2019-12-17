@@ -37,8 +37,6 @@ router.post('/update', (req, res) => {
 });
 
 router.post('/create', multipartMiddleware, async (req, res) => {
-    console.log(req.body)
-    console.log(req.files)
     let content = fs.readFileSync(req.files.imagen.path)
     let extension = req.files.imagen.type.split('/')[1];
     let nombre = Date.now();
@@ -46,10 +44,9 @@ router.post('/create', multipartMiddleware, async (req, res) => {
     // res.json({ succes: 'Todo Correcto' })
     req.body.especializacion = [req.body.perfil1, req.body.perfil2, req.body.perfil3, req.body.perfil4, req.body.perfil5]
     req.body.imgUrl = nombre + "." + extension;
-    const projects = await temas.getAll();
     temas.insert(req.body)
         .then(result => {
-            res.json(result);
+            res.json(result)
         })
 })
 

@@ -3,3 +3,9 @@ package-lock.json
 *.log
 *.gz
 .env
+
+# Images
+.png
+.jpg
+/images
+/public
