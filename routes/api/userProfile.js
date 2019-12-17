@@ -19,4 +19,6 @@ router.get("/allData/:userId", async (req, res) => {
   res.json(rows);
 });
 
+
+
 module.exports = router;
