@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const temas = require('../../models/temas');
-const middleware = require('../middleware');
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart();
 const fs = require('fs');
@@ -35,11 +34,11 @@ router.get('/:pId', (req, res) => {
 
 // Ruta de actualizacion de temas
 
-router.post('/update', (req, res) => {
-    temas.update(req.body)
-        .then(result => {
-            res.json(result);
-        })
+router.post('/update', async (req, res) => {
+    const result = await temas.update(req.body)
+    const row = await temas.getById(req.body.id)
+    res.json(row)
+
 });
 
 router.post('/create', multipartMiddleware, async (req, res) => {
