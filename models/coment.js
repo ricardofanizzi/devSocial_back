@@ -1,9 +1,9 @@
 //insert de comentarios
-const newComent = ({ coment, date, idUser, idTema }) => {
+const newComent = ({ coment, date, idUser, idTema, userName }) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "INSERT INTO COMENTS (coment,date,fk_user,fk_tema) VALUES (?,?,?,?)",
-      [coment, new Date(), idUser, idTema],
+      "INSERT INTO COMENTS (coment,date,fk_user,fk_tema, user_name) VALUES (?,?,?,?,?)",
+      [coment, new Date(), idUser, idTema, userName],
       (error, result) => {
         if (error) reject(error);
         resolve(result);

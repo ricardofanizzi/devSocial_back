@@ -8,8 +8,10 @@ router.post("/", (req, res) => {
   coment
     .newComent(req.body)
     .then(async result => {
-      let comentarios = await coment.getComents(req.body.idTema);
+      let comentarios = await coment.getComents(req.body.idTema, req.body.userName);
+      console.log(comentarios)
       res.json(comentarios);
+
     })
     .catch(error => {
       console.log(error);
