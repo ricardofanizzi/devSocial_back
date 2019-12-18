@@ -54,6 +54,15 @@ const deleted = (pId) => {
     })
 }
 
+const getAllAndTbi = () => {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT temas.*, tbi_tema_user.id_user FROM tbi_tema_user INNER JOIN temas ON temas.id = tbi_tema_user.id_tema', (err, rows) => {
+            if (err) reject(err)
+            resolve(rows)
+        })
+    })
+}
+
 
 
 
@@ -64,7 +73,8 @@ module.exports = {
     getById: getById,
     insert: insert,
     update: update,
-    deleted: deleted
+    deleted: deleted,
+    getAllAndTbi: getAllAndTbi
 
 }
 

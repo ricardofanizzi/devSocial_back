@@ -18,12 +18,20 @@ router.post("/checkuser", async (req, res) => {
   res.json(result[0]);
 });
 
+
+
 //GET http://localhost:3000/api/usertema/allData
 router.get("/allData", async (req, res) => {
   req.body.userId = req.userId;
   const rows = await userTema.getTemaByUser(req.body);
   res.json(rows)
-  console.log(rows);
 });
+
+
+router.get("/dataInner", async (req, res) => {
+  req.body.userId = req.userId;
+  const rows = await userTema.getUserInTema(req.body);
+  res.json(rows.map(item => item.id));
+})
 
 module.exports = router;

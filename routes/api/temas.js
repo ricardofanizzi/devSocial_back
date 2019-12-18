@@ -10,9 +10,15 @@ const fs = require('fs');
 router.get('/', (req, res) => {
     temas.getAll()
         .then(rows => {
+            //console.log(rows);
             res.json(rows)
         })
         .catch(err => console.log(err))
+})
+
+router.get('/temastbi', async (req, res) => {
+    const result = await temas.getAllAndTbi()
+
 })
 
 
@@ -37,6 +43,7 @@ router.post('/update', (req, res) => {
 });
 
 router.post('/create', multipartMiddleware, async (req, res) => {
+    console.log(req.headers)
     let content = fs.readFileSync(req.files.imagen.path)
     let extension = req.files.imagen.type.split('/')[1];
     let nombre = Date.now();

@@ -38,8 +38,21 @@ const getTemaByUser = ({ userId }) => {
   });
 };
 
+const getUserInTema = ({ userId }) => {
+  console.log(userId)
+  //todos los temas que tengan ese userId
+  return new Promise((resolve, reject) => {
+    db.query("SELECT temas.* FROM tbi_tema_user INNER JOIN temas ON temas.id = tbi_tema_user.id_tema WHERE tbi_tema_user.id_user = ?", [userId], (err, rows) => {
+      console.log(rows)
+      if (err) reject(err);
+      resolve(rows);
+    })
+  })
+}
+
 module.exports = {
   insert: insert,
   getTemaByUser: getTemaByUser,
-  checkUser: checkUser
+  checkUser: checkUser,
+  getUserInTema: getUserInTema
 };
