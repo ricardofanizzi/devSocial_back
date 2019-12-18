@@ -53,7 +53,7 @@ const getByEmail = pEmail => {
 };
 
 /* Registro de usuarios */
-const insert = ({ email, username, password, name, surnames, imageUrl }) => {
+const insert = ({ email, username, password, name, surnames }) => {
   return new Promise((resolve, reject) => {
     db.query(
       "INSERT INTO users ( email, username, password, name, surnames, imageUrl, isActive, startAt, updateAt) VALUES (?, ?, ?, ? ,? ,?, ?, ?, ? )",
@@ -63,7 +63,7 @@ const insert = ({ email, username, password, name, surnames, imageUrl }) => {
         password,
         name,
         surnames,
-        imageUrl,
+        'https://s5.postimg.cc/537jajaxj/default.png',
         true,
         new Date(),
         new Date()
