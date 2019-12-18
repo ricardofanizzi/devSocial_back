@@ -33,9 +33,9 @@ const insert = ({ name, isPublic, descripcion, imgUrl, especializacion, fecha_in
 }
 
 /* Actualización de temas */
-const update = ({ name, isPublic, isActive, descripcion, imgUrl, id }) => {
+const update = ({ name, descripcion, id }) => {
     return new Promise((resolve, reject) => {
-        db.query('UPDATE temas SET nombre = ?, isPublic = ?, isActive = ?, descripcion = ?, imgUrl = ? WHERE id = ?', [name, isPublic, isActive, descripcion, imgUrl, id], (err, result) => {
+        db.query('UPDATE temas SET updateAt = ?, name = ?, descripcion = ? WHERE id = ?', [new Date(), name, descripcion, id], (err, result) => {
             if (err) reject(err)
             resolve(result)
         });
