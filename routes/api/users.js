@@ -25,6 +25,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const user = await Users.getByEmail(req.body.email);
+  console.log(user)
   if (user === undefined) {
     res.json({
       error: "Error, email or password not found"
