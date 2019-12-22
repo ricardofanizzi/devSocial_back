@@ -5,8 +5,7 @@ const coment = require("../../models/coment");
 //POST http://localhost:3000/api/coment
 
 router.post("/", (req, res) => {
-  coment
-    .newComent(req.body)
+  coment.newComent(req.body)
     .then(async result => {
       let comentarios = await coment.getComents(req.body.idTema, req.body.userName);
       console.log(comentarios)

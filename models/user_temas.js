@@ -1,5 +1,3 @@
-
-
 const insert = ({ idTema, idUser, role }) => {
   return new Promise((resolve, reject) => {
     db.query(
