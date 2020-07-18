@@ -15,9 +15,9 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err))
 })
 
+
 router.get('/temastbi', async (req, res) => {
     const result = await temas.getAllAndTbi()
-
 })
 
 
@@ -33,13 +33,13 @@ router.get('/:pId', (req, res) => {
 
 
 // Ruta de actualizacion de temas
-
 router.post('/update', async (req, res) => {
     const result = await temas.update(req.body)
     const row = await temas.getById(req.body.id)
     res.json(row)
 
 });
+
 
 router.post('/create', multipartMiddleware, async (req, res) => {
     console.log(req.headers)

@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const UserProfile = require("../../models/userProfile");
-const middleware = require("../middleware")
+const middleware = require("../middleware");
+
+
 //POST  http://localhost:3000/api/userProfile
 router.post("/", (req, res) => {
   UserProfile.createUser(req.body)
@@ -24,6 +26,7 @@ router.get("/allData/:userId", async (req, res) => {
 //POST http://localhost:3000/api/userProfile/dataExtra
 router.use(middleware.checkToken);
 
+
 router.post("/dataExtra", (req, res) => {
   req.body.id = req.userId;
   console.log(req.body)
@@ -35,6 +38,7 @@ router.post("/dataExtra", (req, res) => {
   })
 })
 
+
 //POST http://localhost:3000/api/userProfile/about
 router.post("/about", (req, res) => {
   req.body.id = req.userId;
@@ -45,8 +49,8 @@ router.post("/about", (req, res) => {
   })
 })
 
-//POST http://localhost:3000/api/userProfile/skills
 
+//POST http://localhost:3000/api/userProfile/skills
 router.post("/skills", (req, res) => {
   req.body.id = req.userId;
   UserProfile.updateSkills(req.body).then(resolve => {
@@ -55,5 +59,6 @@ router.post("/skills", (req, res) => {
     console.log(error);
   })
 })
+
 
 module.exports = router;
